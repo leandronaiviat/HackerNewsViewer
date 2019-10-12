@@ -1,6 +1,5 @@
 ﻿using HackerNewsWPFMVVM.Models.Data;
 using Microsoft.Extensions.Caching.Memory;
-using System.Collections.Generic;
 
 namespace HackerNewsWPFMVVM.Models.Api
 {
