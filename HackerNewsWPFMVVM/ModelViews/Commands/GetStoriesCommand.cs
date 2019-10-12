@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
-namespace HackerNewsWPFMVVM
+namespace HackerNewsWPFMVVM.ModelViews.Commands
 {
-    public class GetPostsCommand : ICommand
+    public class GetStoriesCommand : ICommand
     {
         public BaseViewModel ViewModel { get; set; }
 
-        public GetPostsCommand(BaseViewModel viewModel)
+        public GetStoriesCommand(BaseViewModel viewModel)
         {
             this.ViewModel = viewModel;
         }
@@ -22,7 +20,7 @@ namespace HackerNewsWPFMVVM
 
         public void Execute(object parameter)
         {
-            this.ViewModel.GetPosts();
+            this.ViewModel.GetStories();
         }
     }
 }

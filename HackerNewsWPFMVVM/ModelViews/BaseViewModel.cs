@@ -1,8 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using HackerNewsWPFMVVM.Models.Api;
+using HackerNewsWPFMVVM.Models.Data;
+using HackerNewsWPFMVVM.ModelViews.Commands;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 
-namespace HackerNewsWPFMVVM
+namespace HackerNewsWPFMVVM.ModelViews
 {
     public class BaseViewModel : ObservableCollection<StoryModel>
     {
@@ -14,11 +17,11 @@ namespace HackerNewsWPFMVVM
 
         HackerNewsEndPoint EndPoint = new HackerNewsEndPoint();
 
-        public GetPostsCommand GetPostsCommand { get; set; }
+        public GetStoriesCommand GetStoriesCommand { get; set; }
 
         public BaseViewModel()
         {
-            this.GetPostsCommand = new GetPostsCommand(this);
+            this.GetStoriesCommand = new GetStoriesCommand(this);
 
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
@@ -33,7 +36,7 @@ namespace HackerNewsWPFMVVM
         //    Debug.WriteLine("hola");
         //}
 
-        public async void GetPosts()
+        public async void GetStories()
         {
             var result = await EndPoint.GetStories(StoryType, Increment, NextItem);
 

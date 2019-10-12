@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace HackerNewsWPFMVVM
+namespace HackerNewsWPFMVVM.Models.Api
 {
     public static class HackerNewsApi
     {

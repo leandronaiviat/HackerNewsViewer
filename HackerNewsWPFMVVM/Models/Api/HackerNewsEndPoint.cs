@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using HackerNewsWPFMVVM.Models.Data;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HackerNewsWPFMVVM
+namespace HackerNewsWPFMVVM.Models.Api
 {
     public class HackerNewsEndPoint
     {
@@ -11,7 +12,7 @@ namespace HackerNewsWPFMVVM
 
         public HackerNewsEndPoint() { }
 
-        public async Task<GetPostResponse> GetStories(string storyType, int count, int id = 0,  string order = "asc")
+        public async Task<GetStoriesResponse> GetStories(string storyType, int count, int id = 0,  string order = "asc")
         {
             string url = BaseStoryUrl + storyType;
 
@@ -43,7 +44,7 @@ namespace HackerNewsWPFMVVM
 
             var nextItem = resultIds.FindIndex(a => a == resultRange.Last()) + 1;
 
-            return new GetPostResponse
+            return new GetStoriesResponse
             {
                 StoriesCollection = storiesCollection,
                 NextItem = resultIds[nextItem]

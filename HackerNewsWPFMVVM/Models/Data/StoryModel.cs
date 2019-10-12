@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HackerNewsWPFMVVM
+namespace HackerNewsWPFMVVM.Models.Data
 {
     public class StoryModel
     {
