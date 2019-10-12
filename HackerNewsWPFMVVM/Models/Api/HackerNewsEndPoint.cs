@@ -10,6 +10,8 @@ namespace HackerNewsWPFMVVM.Models.Api
     {
         private const string BaseStoryUrl = "https://hacker-news.firebaseio.com/v0/";
         private const string BaseItemUrl = "https://hacker-news.firebaseio.com/v0/item/";
+        private string CurrentStoryType = "";
+        private List<int> CurrentCollectionIds;
 
         private HackerNewsCaching Cache = new HackerNewsCaching(new MemoryCache(new MemoryCacheOptions()));
 
@@ -17,16 +19,19 @@ namespace HackerNewsWPFMVVM.Models.Api
 
         public async Task<GetStoriesResponse> GetStories(string storyType, int count, int id = 0, string order = "asc")
         {
-            string url = BaseStoryUrl + storyType;
-
-            var resultIds = await HackerNewsApi.ApiHandler<List<int>>(url);
+            if(CurrentStoryType != storyType)
+            {
+                CurrentStoryType = storyType;
+                string url = BaseStoryUrl + CurrentStoryType;
+                CurrentCollectionIds = await HackerNewsApi.ApiHandler<List<int>>(url);
+            }
 
             int index = 0;
 
             if (id != 0)
             {
                 //chequear si el id existe en la lista
-                index = resultIds.FindIndex(a => a == id);
+                index = CurrentCollectionIds.FindIndex(a => a == id);
 
                 if (order == "desc")
                 {
@@ -34,7 +39,7 @@ namespace HackerNewsWPFMVVM.Models.Api
                 }
             }
 
-            List<int> resultRange = resultIds.GetRange(index, count);
+            List<int> resultRange = CurrentCollectionIds.GetRange(index, count);
 
             List<StoryModel> storiesCollection = new List<StoryModel>();
 
@@ -44,12 +49,12 @@ namespace HackerNewsWPFMVVM.Models.Api
                 storiesCollection.Add(result);
             }
 
-            var nextItem = resultIds.FindIndex(a => a == resultRange.Last()) + 1;
+            var nextItem = CurrentCollectionIds.FindIndex(a => a == resultRange.Last()) + 1;
 
             return new GetStoriesResponse
             {
                 StoriesCollection = storiesCollection,
-                NextItem = resultIds[nextItem]
+                NextItem = CurrentCollectionIds[nextItem]
             };
         }
 
