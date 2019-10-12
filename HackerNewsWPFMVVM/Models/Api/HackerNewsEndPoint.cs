@@ -1,4 +1,5 @@
 ﻿using HackerNewsWPFMVVM.Models.Data;
+using Microsoft.Extensions.Caching.Memory;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,22 +11,24 @@ namespace HackerNewsWPFMVVM.Models.Api
         private const string BaseStoryUrl = "https://hacker-news.firebaseio.com/v0/";
         private const string BaseItemUrl = "https://hacker-news.firebaseio.com/v0/item/";
 
+        private HackerNewsCaching Cache = new HackerNewsCaching(new MemoryCache(new MemoryCacheOptions()));
+
         public HackerNewsEndPoint() { }
 
-        public async Task<GetStoriesResponse> GetStories(string storyType, int count, int id = 0,  string order = "asc")
+        public async Task<GetStoriesResponse> GetStories(string storyType, int count, int id = 0, string order = "asc")
         {
             string url = BaseStoryUrl + storyType;
 
             var resultIds = await HackerNewsApi.ApiHandler<List<int>>(url);
-            
+
             int index = 0;
 
             if (id != 0)
             {
                 //chequear si el id existe en la lista
                 index = resultIds.FindIndex(a => a == id);
-                
-                if(order == "desc")
+
+                if (order == "desc")
                 {
                     index -= count;
                 }
@@ -37,8 +40,7 @@ namespace HackerNewsWPFMVVM.Models.Api
 
             foreach (var item in resultRange)
             {
-                url = BaseItemUrl + item.ToString();
-                var result = await HackerNewsApi.ApiHandler<StoryModel>(url);
+                StoryModel result = await GetFromCacheOrApi(item);
                 storiesCollection.Add(result);
             }
 
@@ -49,6 +51,26 @@ namespace HackerNewsWPFMVVM.Models.Api
                 StoriesCollection = storiesCollection,
                 NextItem = resultIds[nextItem]
             };
+        }
+
+        private async Task<StoryModel> GetFromCacheOrApi(int item)
+        {
+            StoryModel isCached = Cache.GetItem(item);
+            StoryModel result;
+
+            if (isCached != null)
+            {
+                result = isCached;
+            }
+            else
+            {
+                string url = BaseItemUrl + item.ToString();
+                result = await HackerNewsApi.ApiHandler<StoryModel>(url);
+                Cache.AddItem(result);
+            }
+
+            return result;
+
         }
 
         public async Task<List<CommentModel>> GetComments(StoryModel parent)
