@@ -38,10 +38,6 @@ namespace HackerNewsWPFMVVM.ModelViews
             }
         }
 
-        //public void SimpleMethod()
-        //{
-        //    Debug.WriteLine("hola");
-        //}
 
         public async void GetStories()
         {
