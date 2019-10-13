@@ -11,16 +11,29 @@ namespace HackerNewsWPFMVVM.ModelViews.Commands
         {
             this.ViewModel = viewModel;
         }
-        public event EventHandler CanExecuteChanged;
 
-        public bool CanExecute(object parameter)
+        /// <summary>
+        /// ICommand Interface Implemantation
+        /// </summary>
+        public event EventHandler CanExecuteChanged
         {
-            return true;
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public void Execute(object parameter)
         {
-            this.ViewModel.GetStories();
+            this.ViewModel.GetStories(parameter as String);
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return this.ViewModel.CheckCurrentListName(parameter as String);
         }
     }
 }
