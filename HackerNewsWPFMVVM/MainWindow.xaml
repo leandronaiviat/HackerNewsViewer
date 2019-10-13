@@ -12,14 +12,43 @@
     </Window.Resources>
 
     <Grid DataContext="{Binding Source={StaticResource viewModel}}">
-        <ListView Margin="400 0 0 0" ItemsSource="{Binding}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        
+        
+
+        <!--Items Menu-->
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding MenuItems}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button x:Name="actionBtn" Width="70" Height="30" Content="{Binding}"
+                            Command="{Binding GetStoriesCommand, Source={StaticResource viewModel}}"
+                            CommandParameter="{Binding}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+
+        
+        <!--List of Stories-->
+        <ListView Grid.Row="1" ItemsSource="{Binding}" HorizontalAlignment="center" Width="500">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBox Text="{Binding Title}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="actionBtn" Width="70" Height="70" Margin="0 0 600 0" Content="Load" Command="{Binding GetStoriesCommand}"
-                />
+
+
+
     </Grid>
 </Window>
