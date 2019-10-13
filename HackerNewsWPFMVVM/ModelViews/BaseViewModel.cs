@@ -39,8 +39,16 @@ namespace HackerNewsWPFMVVM.ModelViews
         }
 
 
-        public async void GetStories()
+        public async void GetStories(string storyType)
         {
+            if (CheckCurrentListName(storyType))
+            {
+                StoryType = storyType.ToLower() + "stories";
+                OnPropertyChanged("StoryType");
+                NextItem = 0;
+                Clear();
+            }
+            
             var result = await EndPoint.GetStories(StoryType, Increment, NextItem);
 
             //result.ForEach(x => Add(x));
