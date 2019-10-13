@@ -1,6 +1,7 @@
 ﻿using HackerNewsWPFMVVM.Models.Api;
 using HackerNewsWPFMVVM.Models.Data;
 using HackerNewsWPFMVVM.ModelViews.Commands;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -18,10 +19,16 @@ namespace HackerNewsWPFMVVM.ModelViews
         HackerNewsEndPoint EndPoint = new HackerNewsEndPoint();
 
         public GetStoriesCommand GetStoriesCommand { get; set; }
+        public List<string> MenuItems { get; set; }
 
         public BaseViewModel()
         {
             this.GetStoriesCommand = new GetStoriesCommand(this);
+
+            MenuItems = new List<string>();
+            MenuItems.Add("Best");
+            MenuItems.Add("Top");
+            MenuItems.Add("New");
 
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
