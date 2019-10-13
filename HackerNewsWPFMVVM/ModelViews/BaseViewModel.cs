@@ -10,7 +10,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 {
     public class BaseViewModel : ObservableCollection<StoryModel>
     {
-        private string StoryType = "topstories";
+        private string StoryType = "";
         private int Increment = 10;
         //private int Id = 0;
         //private string Order = "asc";
@@ -30,6 +30,8 @@ namespace HackerNewsWPFMVVM.ModelViews
             MenuItems.Add("Top");
             MenuItems.Add("New");
             MenuItems.Add("Next");
+
+            GetStories("top");
 
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
