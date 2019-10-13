@@ -19,7 +19,7 @@ namespace HackerNewsWPFMVVM.Models.Api
 
         public async Task<GetStoriesResponse> GetStories(string storyType, int count, int id = 0, string order = "asc")
         {
-            if(CurrentStoryType != storyType)
+            if (CurrentStoryType != storyType)
             {
                 CurrentStoryType = storyType;
                 string url = BaseStoryUrl + CurrentStoryType;
