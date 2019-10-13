@@ -29,6 +29,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             MenuItems.Add("Best");
             MenuItems.Add("Top");
             MenuItems.Add("New");
+            MenuItems.Add("Next");
 
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
@@ -41,7 +42,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public async void GetStories(string storyType)
         {
-            if (CheckCurrentListName(storyType))
+            if (CheckCurrentListName(storyType) && storyType != "Next")
             {
                 StoryType = storyType.ToLower() + "stories";
                 OnPropertyChanged("StoryType");
