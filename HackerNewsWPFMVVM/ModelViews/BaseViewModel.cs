@@ -62,6 +62,14 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         }
 
+        public bool CheckCurrentListName(string parameter)
+        {
+            if (parameter.ToUpper() + "STORIES" == StoryType.ToUpper())
+                return false;
+
+            return true;
+        }
+
         // CommentViewModel : ObservableCollection<List<CommentModel>> OR ObservableCollection<ObservableCollection<CommentModel>>
     }
 }
