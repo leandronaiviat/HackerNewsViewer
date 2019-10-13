@@ -29,6 +29,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             MenuItems.Add("Best");
             MenuItems.Add("Top");
             MenuItems.Add("New");
+            MenuItems.Add("Ask");
             MenuItems.Add("Next");
 
             GetStories("top");
