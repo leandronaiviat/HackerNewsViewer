@@ -52,12 +52,17 @@ namespace HackerNewsWPFMVVM.ModelViews
                 NextItem = 0;
                 Clear();
             }
-            
+
             var result = await EndPoint.GetStories(StoryType, Increment, NextItem);
 
             //result.ForEach(x => Add(x));
 
             NextItem = result.NextItem;
+
+            if (NextItem < 0)
+            {
+                GetStoriesCommand.RaiseCanExecuteChanged();
+            }
 
             foreach (var item in result.StoriesCollection)
             {
@@ -68,6 +73,9 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public bool CheckCurrentListName(string parameter)
         {
+            if (NextItem < 0 && parameter == "Next")
+                return false;
+
             if (parameter.ToUpper() + "STORIES" == StoryType.ToUpper())
                 return false;
 
