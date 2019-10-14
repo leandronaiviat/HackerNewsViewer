@@ -10,11 +10,12 @@ namespace HackerNewsWPFMVVM.ModelViews
 {
     public class BaseViewModel : ObservableCollection<StoryModel>
     {
-        private string StoryType = "";
+        private string StoryItemApiName = "";
         private int Increment = 10;
         //private int Id = 0;
         //private string Order = "asc";
         private int NextItem = 0;
+        private string StoryType;
 
         HackerNewsEndPoint EndPoint = new HackerNewsEndPoint();
 
@@ -45,30 +46,34 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public async void GetStories(string storyType)
         {
+            StoryType = storyType;
+
             if (CheckCurrentListName(storyType) && storyType != "Next")
             {
-                StoryType = storyType.ToLower() + "stories";
-                OnPropertyChanged("StoryType");
+                StoryItemApiName = storyType.ToLower() + "stories";
+                OnPropertyChanged("StoryItemApiName");
                 NextItem = 0;
                 Clear();
             }
 
-            var result = await EndPoint.GetStories(StoryType, Increment, NextItem);
+            var result = await EndPoint.GetStories(StoryItemApiName, Increment, NextItem);
 
             //result.ForEach(x => Add(x));
 
-            NextItem = result.NextItem;
-
-            if (NextItem < 0)
+            if (StoryType == storyType)
             {
-                GetStoriesCommand.RaiseCanExecuteChanged();
-            }
+                NextItem = result.NextItem;
 
-            foreach (var item in result.StoriesCollection)
-            {
-                Add(item);
-            }
+                if (NextItem < 0)
+                {
+                    GetStoriesCommand.RaiseCanExecuteChanged();
+                }
 
+                foreach (var item in result.StoriesCollection)
+                {
+                    Add(item);
+                }
+            }
         }
 
         public bool CheckCurrentListName(string parameter)
@@ -76,7 +81,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             if (NextItem < 0 && parameter == "Next")
                 return false;
 
-            if (parameter.ToUpper() + "STORIES" == StoryType.ToUpper())
+            if (parameter.ToUpper() + "STORIES" == StoryItemApiName.ToUpper())
                 return false;
 
             return true;
