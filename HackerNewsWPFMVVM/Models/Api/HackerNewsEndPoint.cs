@@ -54,13 +54,25 @@ namespace HackerNewsWPFMVVM.Models.Api
                 storiesCollection.Add(result);
             }
 
-            var nextItem = CurrentCollectionIds.FindIndex(a => a == resultRange.Last()) + 1;
-
             return new GetStoriesResponse
             {
                 StoriesCollection = storiesCollection,
-                NextItem = CurrentCollectionIds[nextItem]
+                NextItem = CheckIfNextItem(resultRange)
             };
+        }
+
+        private int CheckIfNextItem(List<int> resultRange)
+        {
+            int nextItem = CurrentCollectionIds.FindIndex(a => a == resultRange.Last()) + 1;
+
+            if (nextItem >= CurrentCollectionIds.Count)
+            {
+                return -1;
+            }
+            else
+            {
+                return CurrentCollectionIds[nextItem];
+            }
         }
 
         private async Task<StoryModel> GetFromCacheOrApi(int item)
