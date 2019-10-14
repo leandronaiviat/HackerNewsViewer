@@ -39,6 +39,11 @@ namespace HackerNewsWPFMVVM.Models.Api
                 }
             }
 
+            if (index + count > CurrentCollectionIds.Count)
+            {
+                count = CurrentCollectionIds.Count - index;
+            }
+
             List<int> resultRange = CurrentCollectionIds.GetRange(index, count);
 
             List<StoryModel> storiesCollection = new List<StoryModel>();
