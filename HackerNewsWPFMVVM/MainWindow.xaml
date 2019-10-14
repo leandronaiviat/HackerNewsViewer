@@ -4,46 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
+        xmlns:views="clr-namespace:HackerNewsWPFMVVM.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
     <Window.Resources>
-        <viewmodel:BaseViewModel x:Key="viewModel"/>
+        <DataTemplate x:Name="storiesViewTemplate" DataType="{x:Type viewmodel:StoriesViewModel}">
+            <views:StoriesView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
 
-    <Grid DataContext="{StaticResource viewModel}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
-        </Grid.RowDefinitions>
-
-
-
-        <!--Items Menu-->
-        <DockPanel Grid.Row="0" >
-            <ItemsControl ItemsSource="{Binding MenuItems, Source={StaticResource viewModel}}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Button x:Name="actionBtn" Width="70" Height="30" Content="{Binding}"
-                            Command="{Binding GetStoriesCommand, Source={StaticResource storiesModel}}"
-                            CommandParameter="{Binding}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </DockPanel>
-
-
-
-
-
-
-
+    <Grid>
+        <!--Content Controls-->
+        <ContentControl Grid.Row="1" Content="{Binding}"/>
     </Grid>
 </Window>
