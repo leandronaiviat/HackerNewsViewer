@@ -5,11 +5,11 @@ namespace HackerNewsWPFMVVM.ModelViews.Commands
 {
     public class GetStoriesCommand : ICommand
     {
-        public BaseViewModel ViewModel { get; set; }
+        private StoriesViewModel StoriesViewModel { get; set; }
 
-        public GetStoriesCommand(BaseViewModel viewModel)
+        public GetStoriesCommand(StoriesViewModel storiesViewModel)
         {
-            this.ViewModel = viewModel;
+            StoriesViewModel = storiesViewModel;
         }
 
         /// <summary>
@@ -28,12 +28,12 @@ namespace HackerNewsWPFMVVM.ModelViews.Commands
 
         public void Execute(object parameter)
         {
-            this.ViewModel.GetStories(parameter as String);
+            StoriesViewModel.GetStories(parameter as String);
         }
 
         public bool CanExecute(object parameter)
         {
-            return this.ViewModel.CheckCurrentListName(parameter as String);
+            return StoriesViewModel.CheckCurrentListName(parameter as String);
         }
     }
 }

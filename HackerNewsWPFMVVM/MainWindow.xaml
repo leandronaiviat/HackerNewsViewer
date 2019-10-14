@@ -4,14 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
+        xmlns:storiesmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
     <Window.Resources>
         <viewmodel:BaseViewModel x:Key="viewModel"/>
+        <storiesmodel:StoriesViewModel x:Key="storiesModel"/>
     </Window.Resources>
 
-    <Grid DataContext="{Binding Source={StaticResource viewModel}}">
+    <Grid DataContext="{StaticResource viewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
@@ -21,7 +23,7 @@
         
 
         <!--Items Menu-->
-        <ItemsControl Grid.Row="0" ItemsSource="{Binding MenuItems}">
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding MenuItems, Source={StaticResource viewModel}}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Horizontal"/>
@@ -31,7 +33,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button x:Name="actionBtn" Width="70" Height="30" Content="{Binding}"
-                            Command="{Binding GetStoriesCommand, Source={StaticResource viewModel}}"
+                            Command="{Binding GetStoriesCommand, Source={StaticResource storiesModel}}"
                             CommandParameter="{Binding}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -40,7 +42,7 @@
 
         
         <!--List of Stories-->
-        <ListView Grid.Row="1" ItemsSource="{Binding}" HorizontalAlignment="center" Width="500">
+        <ListView Grid.Row="1" ItemsSource="{StaticResource storiesModel}" HorizontalAlignment="center" Width="500">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextBox Text="{Binding Title}"/>
