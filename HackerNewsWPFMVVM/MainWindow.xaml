@@ -12,6 +12,9 @@
         <DataTemplate x:Name="storiesViewTemplate" DataType="{x:Type viewmodel:StoriesViewModel}">
             <views:StoriesView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="commentsViewTemplate" DataType="{x:Type viewmodel:CommentsViewModel}">
+            <views:CommentsView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>

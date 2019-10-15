@@ -12,7 +12,9 @@ namespace HackerNewsWPFMVVM
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new StoriesViewModel();
+            //StoriesViewModel StoriesModel = new StoriesViewModel();
+            //DataContext = StoriesModel;
+            DataContext = new CommentsViewModel();
         }
     }
 }
