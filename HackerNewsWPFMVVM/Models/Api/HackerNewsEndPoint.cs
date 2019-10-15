@@ -101,13 +101,24 @@ namespace HackerNewsWPFMVVM.Models.Api
             return result;
         }
 
-        public async Task<List<CommentModel>> GetComments(int parentId)
+        public async Task<List<CommentModel>> GetComments(int parentId, string dataModelType)
         {
             List<CommentModel> commentsCollection = new List<CommentModel>();
 
-            StoryModel parentStory = await GetFromCacheOrApi(parentId, "story") as StoryModel;
+            IDataModel parent;
 
-            foreach (var item in parentStory.Kids)
+            if(dataModelType == "story")
+            {
+                parent = await GetFromCacheOrApi(parentId, "story") as StoryModel;
+
+            }
+            else
+            {
+                parent = await GetFromCacheOrApi(parentId, "comment") as CommentModel;
+            }
+
+
+            foreach (var item in parent.Kids)
             {
                 CommentModel result = await GetFromCacheOrApi(item, "comment") as CommentModel;
                 commentsCollection.Add(result);
