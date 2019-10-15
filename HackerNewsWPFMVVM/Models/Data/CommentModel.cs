@@ -13,5 +13,6 @@ namespace HackerNewsWPFMVVM.Models.Data
         public string Type { get; set; }    //AskModel, StoryModel, CommentModel
         public string Url { get; set; }     //AskModel, StoryModel, CommentModel
         public int Level { get; set; }
+        public List<CommentModel> Children { get; set; }
     }
 }

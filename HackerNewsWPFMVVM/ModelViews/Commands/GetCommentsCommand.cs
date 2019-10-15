@@ -28,7 +28,7 @@ namespace HackerNewsWPFMVVM.ModelViews.Commands
 
         public void Execute(object parameter)
         {
-            CommentsViewModel.GetComments((int)parameter);
+            CommentsViewModel.GetMoreComments((int)parameter);
         }
 
         public bool CanExecute(object parameter)
