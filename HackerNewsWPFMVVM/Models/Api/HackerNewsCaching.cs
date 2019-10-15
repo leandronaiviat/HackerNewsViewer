@@ -12,14 +12,14 @@ namespace HackerNewsWPFMVVM.Models.Api
             _cache = Cache;
         }
 
-        public void AddItem(StoryModel model)
+        public void AddItem(IDataModel model)
         {
-            _cache.Set<StoryModel>(model.Id.ToString(), model);
+            _cache.Set<IDataModel>(model.Id.ToString(), model);
         }
 
-        public StoryModel GetItem(int Id)
+        public IDataModel GetItem(int Id)
         {
-            StoryModel result;
+            IDataModel result;
 
             bool sucess = _cache.TryGetValue(Id.ToString(), out result);
 

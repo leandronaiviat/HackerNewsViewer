@@ -2,7 +2,7 @@
 
 namespace HackerNewsWPFMVVM.Models.Data
 {
-    public class StoryModel
+    public class StoryModel : IDataModel
     {
         public string By { get; set; }      //AskModel, StoryModel, CommentModel
         public int Descendants { get; set; }//AskModel, StoryModel
