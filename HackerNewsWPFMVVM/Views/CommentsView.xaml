@@ -4,14 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:commentsmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
+             xmlns:converter="clr-namespace:HackerNewsWPFMVVM.ModelViews.Converters"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        
+
         <!--Static Resouses-->
         <commentsmodel:CommentsViewModel x:Key="commentsModel"/>
-        
+        <converter:ButtonVisibilityConverter x:Key="converter"/>
+
         <!--Recursive Comments Template-->
         <DataTemplate x:Key="myTemplate">
             <Border Margin="0 5" Background="GhostWhite" BorderBrush="Silver" BorderThickness="1" CornerRadius="8,8,8,8">
@@ -24,8 +26,13 @@
                                  BorderThickness="0"
                                  Background="Transparent"
                                  Margin="0 0 0 10"/>
-                    <Button Command="{Binding GetCommentsCommand, Source={StaticResource commentsModel}}"
-                                    CommandParameter="{Binding Id}">
+                    <Button Command="{Binding GetCommentsCommand, Source={StaticResource commentsModel}}" CommandParameter="{Binding Id}">
+                        <Button.Visibility>
+                            <MultiBinding Converter="{StaticResource converter}">
+                                <Binding Path="Kids.Count"/>
+                                <Binding Path="Children.Count"/>
+                            </MultiBinding>
+                        </Button.Visibility>
                         <Button.Content>
                             <TextBlock Text="{Binding Kids.Count, StringFormat='{}{0} more comments'}"/>
                         </Button.Content>
