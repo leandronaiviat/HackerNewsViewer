@@ -23,7 +23,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
             this.GetCommentsCommand = new GetCommentsCommand(this);
 
-            GetComments(8863);
+            GetComments(21257871);
 
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
@@ -47,8 +47,20 @@ namespace HackerNewsWPFMVVM.ModelViews
         {
             var result = await EndPoint.GetComments(parentId, "comment");
 
-            var parent = this.Where(z => z.Id == parentId).FirstOrDefault();
+            //var parent = this.Where(z => z.Id == parentId).FirstOrDefault();
 
+            GetCommentsResponse commentResponse = null;
+            foreach (var item in this)
+            {
+                commentResponse = GetCommentTree(item, parentId, item.Id);
+                if(commentResponse != null)
+                {
+                    break;
+                }
+            }
+
+            CommentModel parent = commentResponse.Comment;
+            int TopCommentId = commentResponse.TopCommentId;
             parent.Children = new List<CommentModel>();
 
             foreach (var item in result)
@@ -57,12 +69,44 @@ namespace HackerNewsWPFMVVM.ModelViews
                 parent.Children.Add(item);
             }
 
-            var itemToUpdate = this.Single(r => r.Id == parentId);
+            var itemToUpdate = this.Single(r => r.Id == TopCommentId);
             var index = this.IndexOf(itemToUpdate);
-            this.InsertItem(index, parent);
+            this.InsertItem(index, itemToUpdate);
             this.RemoveAt(index + 1);
             //this.Remove(itemToRemove);
-            
+        }
+
+        public GetCommentsResponse GetCommentTree(CommentModel item, int currentNodeId, int topCommentId)
+        {
+            if (item.Id != currentNodeId)
+            {
+                if (item.Children != null)
+                {
+                    GetCommentsResponse foundresult = null;
+                    foreach (var inner in item.Children)
+                    {
+                        foundresult = GetCommentTree(inner, currentNodeId, topCommentId);
+                        if (foundresult != null)
+                        {
+                            break;
+                        }
+                    }
+
+                    return foundresult;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return new GetCommentsResponse
+                {
+                    Comment = item,
+                    TopCommentId = topCommentId
+                };
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
