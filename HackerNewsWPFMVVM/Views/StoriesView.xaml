@@ -4,12 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:storiesmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
-             xmlns:viewmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <viewmodel:BaseViewModel x:Key="viewModel"/>
         <storiesmodel:StoriesViewModel x:Key="storiesModel"/>
     </UserControl.Resources>
 
