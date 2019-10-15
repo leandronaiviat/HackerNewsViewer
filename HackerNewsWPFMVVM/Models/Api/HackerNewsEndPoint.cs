@@ -50,7 +50,7 @@ namespace HackerNewsWPFMVVM.Models.Api
 
             foreach (var item in resultRange)
             {
-                StoryModel result = await GetFromCacheOrApi(item);
+                StoryModel result = await GetFromCacheOrApi(item, "story") as StoryModel;
                 storiesCollection.Add(result);
             }
 
@@ -75,10 +75,10 @@ namespace HackerNewsWPFMVVM.Models.Api
             }
         }
 
-        private async Task<StoryModel> GetFromCacheOrApi(int item)
+        private async Task<IDataModel> GetFromCacheOrApi(int item, string dataModelType)
         {
-            StoryModel isCached = Cache.GetItem(item);
-            StoryModel result;
+            IDataModel isCached = Cache.GetItem(item);
+            IDataModel result;
 
             if (isCached != null)
             {
@@ -87,23 +87,29 @@ namespace HackerNewsWPFMVVM.Models.Api
             else
             {
                 string url = BaseItemUrl + item.ToString();
-                result = await HackerNewsApi.ApiHandler<StoryModel>(url);
+                if (dataModelType == "story")
+                {
+                    result = await HackerNewsApi.ApiHandler<StoryModel>(url);
+                }
+                else
+                {
+                    result = await HackerNewsApi.ApiHandler<CommentModel>(url);
+                }
                 Cache.AddItem(result);
             }
 
             return result;
-
         }
 
-        public async Task<List<CommentModel>> GetComments(StoryModel parent)
+        public async Task<List<CommentModel>> GetComments(int parentId)
         {
-            string url = BaseItemUrl;
-
             List<CommentModel> commentsCollection = new List<CommentModel>();
 
-            foreach (var item in parent.Kids)
+            StoryModel parentStory = await GetFromCacheOrApi(parentId, "story") as StoryModel;
+
+            foreach (var item in parentStory.Kids)
             {
-                var result = await HackerNewsApi.ApiHandler<CommentModel>(url + item.ToString());
+                CommentModel result = await GetFromCacheOrApi(item, "comment") as CommentModel;
                 commentsCollection.Add(result);
             }
 

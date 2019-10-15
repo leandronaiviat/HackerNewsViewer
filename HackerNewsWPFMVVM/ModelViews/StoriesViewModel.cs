@@ -95,7 +95,5 @@ namespace HackerNewsWPFMVVM.ModelViews
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        // CommentViewModel : ObservableCollection<List<CommentModel>> OR ObservableCollection<ObservableCollection<CommentModel>>
     }
 }
