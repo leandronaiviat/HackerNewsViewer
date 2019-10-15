@@ -19,6 +19,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         HackerNewsEndPoint EndPoint = new HackerNewsEndPoint();
         public GetStoriesCommand GetStoriesCommand { get; set; }
+        public ChangeContextCommand ChangeContextCommand { get; set; }
 
         public List<string> MenuItems { get; set; }
 
@@ -32,6 +33,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             MenuItems.Add("Next");
 
             this.GetStoriesCommand = new GetStoriesCommand(this);
+            this.ChangeContextCommand = new ChangeContextCommand(this);
 
             GetStories("top");
 
@@ -84,6 +86,11 @@ namespace HackerNewsWPFMVVM.ModelViews
                 return false;
 
             return true;
+        }
+
+        public void ChangeContext(int storyId)
+        {
+            Application.Current.Windows[0].DataContext = new CommentsViewModel();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
