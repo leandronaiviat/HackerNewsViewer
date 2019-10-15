@@ -28,7 +28,14 @@ namespace HackerNewsWPFMVVM.ModelViews.Commands
 
         public void Execute(object parameter)
         {
-            CommentsViewModel.GetMoreComments((int)parameter);
+            if (parameter as String == "Back")
+            {
+                CommentsViewModel.ChangeContext();
+            }
+            else
+            {
+                CommentsViewModel.GetMoreComments((int)parameter);
+            }
         }
 
         public bool CanExecute(object parameter)

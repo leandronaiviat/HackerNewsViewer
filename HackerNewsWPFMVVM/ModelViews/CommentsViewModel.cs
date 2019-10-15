@@ -19,7 +19,7 @@ namespace HackerNewsWPFMVVM.ModelViews
         public CommentsViewModel()
         {
             MenuItems = new List<string>();
-            MenuItems.Add("Return");
+            MenuItems.Add("Back");
 
             this.GetCommentsCommand = new GetCommentsCommand(this);
 
@@ -118,6 +118,13 @@ namespace HackerNewsWPFMVVM.ModelViews
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public void ChangeContext()
+        {
+            Application.Current.Windows[0].DataContext = new StoriesViewModel();
+        }
+
+
 
         // CommentViewModel : ObservableCollection<List<CommentModel>> OR ObservableCollection<ObservableCollection<CommentModel>>
     }
