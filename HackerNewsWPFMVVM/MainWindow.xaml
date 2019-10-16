@@ -5,16 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
         xmlns:views="clr-namespace:HackerNewsWPFMVVM.Views"
-        mc:Ignorable="d"
+        mc:Ignorable="d"        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="MainWindow" Height="450" Width="800">
 
     <Window.Resources>
-        <DataTemplate x:Name="storiesViewTemplate" DataType="{x:Type viewmodel:StoriesViewModel}">
-            <views:StoriesView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate x:Name="commentsViewTemplate" DataType="{x:Type viewmodel:CommentsViewModel}">
-            <views:CommentsView DataContext="{Binding}"/>
-        </DataTemplate>
+        <ResourceDictionary>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <!-- you only need bring this resource in if you want to specify the circular style statically -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ProgressBar.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <DataTemplate x:Name="storiesViewTemplate" DataType="{x:Type viewmodel:StoriesViewModel}">
+                <views:StoriesView DataContext="{Binding}"/>
+            </DataTemplate>
+            <DataTemplate x:Name="commentsViewTemplate" DataType="{x:Type viewmodel:CommentsViewModel}">
+                <views:CommentsView DataContext="{Binding}"/>
+            </DataTemplate>
+        
+        </ResourceDictionary>
     </Window.Resources>
 
     <Grid>
