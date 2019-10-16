@@ -24,6 +24,8 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public List<string> MenuItems { get; set; }
 
+        public bool IsLoading { get; set; }
+
         public StoriesViewModel()
         {
             EndPoint = Singleton.EndPoint;
@@ -50,6 +52,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public async void GetStories(string storyType)
         {
+            IsLoading = false;
             StoryType = storyType;
 
             if (CheckCurrentListName(storyType) && storyType != "Next")
@@ -78,10 +81,17 @@ namespace HackerNewsWPFMVVM.ModelViews
                     Add(item);
                 }
             }
+            IsLoading = true;
         }
 
         public bool CheckCurrentListName(string parameter)
         {
+            if (IsLoading == false && parameter == "Next")
+                return false;
+
+            if (IsLoading == true && parameter == "Next")
+                return true;
+
             if (NextItem < 0 && parameter == "Next")
                 return false;
 

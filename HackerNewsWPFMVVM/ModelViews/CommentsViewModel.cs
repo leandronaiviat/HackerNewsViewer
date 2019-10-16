@@ -17,6 +17,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public List<string> MenuItems { get; set; }
         public int ID { get; set; }
+        private int CurrentParentId;
 
         public CommentsViewModel()
         {
@@ -49,6 +50,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public async void GetMoreComments(int parentId)
         {
+            CurrentParentId = parentId;
             var result = await EndPoint.GetComments(parentId, "comment");
 
             //var parent = this.Where(z => z.Id == parentId).FirstOrDefault();
@@ -78,6 +80,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             this.InsertItem(index, itemToUpdate);
             this.RemoveAt(index + 1);
             //this.Remove(itemToRemove);
+            CurrentParentId = 0;
         }
 
         public GetCommentsResponse GetCommentTree(CommentModel item, int currentNodeId, int topCommentId)
@@ -111,6 +114,13 @@ namespace HackerNewsWPFMVVM.ModelViews
                     TopCommentId = topCommentId
                 };
             }
+        }
+
+        public bool CheckIsLoading(int currentId)
+        {
+            if (currentId == CurrentParentId)
+                return false;
+            return true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

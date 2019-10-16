@@ -40,8 +40,11 @@ namespace HackerNewsWPFMVVM.ModelViews.Commands
 
         public bool CanExecute(object parameter)
         {
+            if (parameter as String != "Back")
+            {
+                return CommentsViewModel.CheckIsLoading((int)parameter);
+            }
             return true;
-            //return CommentsViewModel.CheckCurrentListName(parameter as String);
         }
     }
 }
