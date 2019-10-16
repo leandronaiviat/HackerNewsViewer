@@ -17,8 +17,8 @@
         <!--Recursive Comments Template-->
         <DataTemplate x:Key="myTemplate">
             <Border Margin="0 5" Background="GhostWhite" BorderBrush="Silver" BorderThickness="1" CornerRadius="8,8,8,8">
-                <StackPanel Margin="10">
-                    <TextBox Text="{Binding Text}" Width="500" 
+            <StackPanel Margin="10">
+                <TextBox Text="{Binding Text}" Width="500" 
                                  HorizontalContentAlignment="Stretch" 
                                  TextWrapping="Wrap" 
                                  IsReadOnly="True" 
@@ -26,31 +26,31 @@
                                  BorderThickness="0"
                                  Background="Transparent"
                                  Margin="0 0 0 10"/>
-                    <Button Command="{Binding GetCommentsCommand, Source={StaticResource commentsModel}}" CommandParameter="{Binding Id}">
-                        <Button.Visibility>
-                            <MultiBinding Converter="{StaticResource converter}">
-                                <Binding Path="Kids.Count"/>
-                                <Binding Path="Children.Count"/>
-                            </MultiBinding>
-                        </Button.Visibility>
-                        <Button.Content>
-                            <TextBlock Text="{Binding Kids.Count, StringFormat='{}{0} more comments'}"/>
-                        </Button.Content>
-                    </Button>
-                    <ItemsControl ItemsSource="{Binding Children}" HorizontalAlignment="center" ItemTemplate="{DynamicResource myTemplate}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel Orientation="Vertical"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </StackPanel>
+                <Button Command="{Binding GetCommentsCommand, Source={StaticResource commentsModel}}" CommandParameter="{Binding Id}">
+                    <Button.Visibility>
+                        <MultiBinding Converter="{StaticResource converter}">
+                            <Binding Path="Kids.Count"/>
+                            <Binding Path="Children.Count"/>
+                        </MultiBinding>
+                    </Button.Visibility>
+                    <Button.Content>
+                        <TextBlock Text="{Binding Kids.Count, StringFormat='{}{0} more comments'}"/>
+                    </Button.Content>
+                </Button>
+                <ItemsControl ItemsSource="{Binding Children}" HorizontalAlignment="center" ItemTemplate="{DynamicResource myTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </StackPanel>
             </Border>
-        </DataTemplate>
+            </DataTemplate>
 
     </UserControl.Resources>
 
-    <Grid DataContext="{StaticResource commentsModel}">
+    <Grid DataContext="{StaticResource commentsModel}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>

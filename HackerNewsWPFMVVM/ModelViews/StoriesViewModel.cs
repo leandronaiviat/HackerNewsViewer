@@ -20,11 +20,13 @@ namespace HackerNewsWPFMVVM.ModelViews
         HackerNewsEndPoint EndPoint = new HackerNewsEndPoint();
         public GetStoriesCommand GetStoriesCommand { get; set; }
         public ChangeContextCommand ChangeContextCommand { get; set; }
+        public MainWindow MV;
 
         public List<string> MenuItems { get; set; }
 
         public StoriesViewModel()
         {
+            MV = ((MainWindow)Application.Current.MainWindow);
             MenuItems = new List<string>();
             MenuItems.Add("Best");
             MenuItems.Add("Top");
@@ -90,6 +92,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public void ChangeContext(int storyId)
         {
+            MV.storyId = storyId;
             Application.Current.Windows[0].DataContext = new CommentsViewModel();
         }
 

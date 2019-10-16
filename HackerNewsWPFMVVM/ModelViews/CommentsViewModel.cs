@@ -13,17 +13,21 @@ namespace HackerNewsWPFMVVM.ModelViews
     {
         HackerNewsEndPoint EndPoint = new HackerNewsEndPoint();
         public GetCommentsCommand GetCommentsCommand { get; set; }
+        public MainWindow MV;
 
         public List<string> MenuItems { get; set; }
+        public int ID { get; set; }
 
         public CommentsViewModel()
         {
+            MV = ((MainWindow)Application.Current.MainWindow);
+
             MenuItems = new List<string>();
             MenuItems.Add("Back");
 
             this.GetCommentsCommand = new GetCommentsCommand(this);
 
-            GetComments(21257871);
+            GetComments(((MainWindow)Application.Current.MainWindow).storyId);
 
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
@@ -121,7 +125,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public void ChangeContext()
         {
-            Application.Current.Windows[0].DataContext = new StoriesViewModel();
+            Application.Current.Windows[0].DataContext = MV.StoriesModel;
         }
 
 
