@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:commentsmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
-             xmlns:converter="clr-namespace:HackerNewsWPFMVVM.ModelViews.Converters"
+             xmlns:converter="clr-namespace:HackerNewsWPFMVVM.ModelViews.Converters"             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -16,9 +17,9 @@
 
         <!--Recursive Comments Template-->
         <DataTemplate x:Key="myTemplate">
-            <Border Margin="0 5" Background="GhostWhite" BorderBrush="Silver" BorderThickness="1" CornerRadius="8,8,8,8">
-            <StackPanel Margin="10">
-                <TextBox Text="{Binding Text}" Width="500" 
+            <Border Margin="0 5 0 5" Background="GhostWhite" BorderBrush="Silver" BorderThickness="0" CornerRadius="8,8,8,8">
+            <StackPanel Margin="30,10,10,10" HorizontalAlignment="Stretch">
+                <TextBox Text="{Binding Text}"
                                  HorizontalContentAlignment="Stretch" 
                                  TextWrapping="Wrap" 
                                  IsReadOnly="True" 
@@ -26,7 +27,12 @@
                                  BorderThickness="0"
                                  Background="Transparent"
                                  Margin="0 0 0 10"/>
-                <Button Command="{Binding GetCommentsCommand, Source={StaticResource commentsModel}}" CommandParameter="{Binding Id}">
+                <Button Command="{Binding GetCommentsCommand, Source={StaticResource commentsModel}}" CommandParameter="{Binding Id}"
+                         HorizontalAlignment="Left" 
+                        Style="{StaticResource MaterialDesignFlatAccentBgButton}"
+                        materialDesign:ButtonProgressAssist.Value="-1"
+                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="True">
                     <Button.Visibility>
                         <MultiBinding Converter="{StaticResource converter}">
                             <Binding Path="Kids.Count"/>
@@ -37,7 +43,9 @@
                         <TextBlock Text="{Binding Kids.Count, StringFormat='{}{0} more comments'}"/>
                     </Button.Content>
                 </Button>
-                <ItemsControl ItemsSource="{Binding Children}" HorizontalAlignment="center" ItemTemplate="{DynamicResource myTemplate}">
+                <ItemsControl ItemsSource="{Binding Children}" HorizontalAlignment="Left"
+                              HorizontalContentAlignment="Stretch"
+                              ItemTemplate="{DynamicResource myTemplate}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel Orientation="Vertical"/>
@@ -54,12 +62,50 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
 
         <!--Items Menu-->
-        <DockPanel Grid.Row="0" >
+        <DockPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource PrimaryHueMidBrush}" Grid.ColumnSpan="5">
+
+            <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="40,0,0,0">
+                <materialDesign:PackIcon Kind="Hackernews" Foreground="White" Margin="0,0,5,0" Height="20" Width="20" VerticalAlignment="Center"/>
+                <TextBlock Text="Hacker News" VerticalAlignment="Center" FontSize="16"
+                   Foreground="White"/>
+            </StackPanel>
+
+            <ItemsControl ItemsSource="{Binding MenuItems}" HorizontalAlignment="Right" Margin="0,0,40,0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button x:Name="actionBtn" Width="70" Height="35" Content="{Binding}"
+                            Command="{Binding GetCommentsCommand,
+                            Source={StaticResource commentsModel}}"
+                            CommandParameter="{Binding}"
+                            materialDesign:ButtonAssist.CornerRadius="5 5 0 0"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                Margin="0,0,20,0"
+                                VerticalAlignment="Bottom"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </DockPanel>
+
+        <!--Items Menu-->
+        <!--<DockPanel Grid.Row="0" >
             <ItemsControl ItemsSource="{Binding MenuItems}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -76,12 +122,12 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </DockPanel>
+        </DockPanel>-->
 
 
         <!--Comments Display-->
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
-            <ItemsControl ItemsSource="{Binding}" HorizontalAlignment="center" ItemTemplate="{DynamicResource myTemplate}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="2" Margin="0,20,0,0" HorizontalAlignment="Center">
+            <ItemsControl ItemsSource="{Binding}" HorizontalContentAlignment="Stretch" ItemTemplate="{DynamicResource myTemplate}" MaxWidth="600" Margin="0,0,20,0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel Orientation="Vertical"/>
