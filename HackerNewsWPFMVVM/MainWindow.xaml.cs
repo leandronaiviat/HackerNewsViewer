@@ -1,4 +1,5 @@
 ﻿using HackerNewsWPFMVVM.ModelViews;
+using System;
 using System.Windows;
 
 namespace HackerNewsWPFMVVM
@@ -8,13 +9,24 @@ namespace HackerNewsWPFMVVM
     /// </summary>
     public partial class MainWindow : Window
     {
-        public int storyId { get; set; }
-        public StoriesViewModel StoriesModel { get; set; }
+        public int StoryId { get; set; }
+        public StoriesViewModel StoriesModel { get; set; } = new StoriesViewModel();
+        bool _shown;
+
+        protected override void OnContentRendered(EventArgs e)
+        {
+            base.OnContentRendered(e);
+
+            if (_shown)
+                return;
+
+            _shown = true;
+
+            DataContext = StoriesModel;
+        }
 
         public MainWindow()
         {
-            StoriesModel = new StoriesViewModel();
-            DataContext = StoriesModel;
             InitializeComponent();
         }
     }

@@ -93,7 +93,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public void ChangeContext(int storyId)
         {
-            MV.storyId = storyId;
+            MV.StoryId = storyId;
             Application.Current.Windows[0].DataContext = new CommentsViewModel();
         }
 

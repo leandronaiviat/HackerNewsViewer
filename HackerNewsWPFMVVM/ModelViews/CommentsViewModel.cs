@@ -27,7 +27,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
             this.GetCommentsCommand = new GetCommentsCommand(this);
 
-            GetComments(((MainWindow)Application.Current.MainWindow).storyId);
+            GetComments(((MainWindow)Application.Current.MainWindow).StoryId);
 
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
