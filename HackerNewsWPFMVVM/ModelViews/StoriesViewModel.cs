@@ -33,7 +33,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             MenuItems.Add("Top");
             MenuItems.Add("New");
             MenuItems.Add("Ask");
-            MenuItems.Add("Next");
+            //MenuItems.Add("Next");
 
             this.GetStoriesCommand = new GetStoriesCommand(this);
             this.ChangeContextCommand = new ChangeContextCommand(this);

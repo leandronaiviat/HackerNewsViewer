@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:storiesmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -15,13 +16,28 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
 
-
+ 
         <!--Items Menu-->
-        <DockPanel Grid.Row="0" >
-            <ItemsControl ItemsSource="{Binding MenuItems}">
+        <DockPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource PrimaryHueMidBrush}" Grid.ColumnSpan="5">
+
+            <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="40,0,0,0">
+                <materialDesign:PackIcon Kind="Hackernews" Foreground="White" Margin="0,0,5,0" Height="20" Width="20" VerticalAlignment="Center"/>
+                <TextBlock Text="Hacker News" VerticalAlignment="Center" FontSize="16"
+                   Foreground="White"/>
+            </StackPanel>
+
+            <ItemsControl ItemsSource="{Binding MenuItems}" HorizontalAlignment="Right" Margin="0,0,40,0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel Orientation="Horizontal"/>
@@ -30,29 +46,107 @@
 
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button x:Name="actionBtn" Width="70" Height="30" Content="{Binding}"
+                        <Button x:Name="actionBtn" Width="70" Height="35" Content="{Binding}"
                             Command="{Binding GetStoriesCommand,
                             Source={StaticResource storiesModel}}"
-                            CommandParameter="{Binding}"/>
+                            CommandParameter="{Binding}"
+                            materialDesign:ButtonAssist.CornerRadius="5 5 0 0"
+                                Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                                Margin="0,0,20,0"
+                                VerticalAlignment="Bottom"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </DockPanel>
 
+        <!--Load More Button-->
+        <DockPanel Grid.Row="2" Grid.Column="2">
+            <Button x:Name="loadButton"  Height="30" Content="Load More"
+                            Command="{Binding GetStoriesCommand,
+                            Source={StaticResource storiesModel}}"
+                            CommandParameter="Next"
+                    IsEnabled="True"
+                    HorizontalAlignment="Stretch"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    materialDesign:ButtonProgressAssist.Value="-1"
+                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                    materialDesign:ButtonProgressAssist.IsIndeterminate="True">
+               
+            </Button>
+        </DockPanel>
+
         <!--List of Stories-->
-        <ListView Grid.Row="1" ItemsSource="{Binding}" HorizontalAlignment="center" Width="500">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBox Text="{Binding Title}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <ItemsControl ItemsSource="{Binding}" HorizontalAlignment="center" Grid.IsSharedSizeScope="True">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="160"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!--<Border x:Name="Border"
+                            Padding="8"
+                            BorderThickness="0 0 0 1"
+                            BorderBrush="{DynamicResource MaterialDesignDivider}">-->
+
+                            <Button Grid.Column="0"
+                                Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+
+                                <Button.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick"
+                                Command="{Binding ChangeContextCommand,
+                                Source={StaticResource storiesModel}}"
+                                CommandParameter="{Binding Id}"/>
+                                </Button.InputBindings>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="70"/>
+                                            <ColumnDefinition Width="70"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal" Grid.Column="0" Margin="0,0,5,0" HorizontalAlignment="Left">
+                                            <materialDesign:PackIcon Kind="CommentsOutline"  Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding Descendants}"/>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left">
+                                            <materialDesign:PackIcon Kind="Like" Margin="0,0,5,0"/>
+                                            <TextBlock Text="{Binding Score}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Button>
+                            <Button Grid.Column="1"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    ToolTip="{Binding Title}">
+
+                                <Button.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick"
+                                Command="{Binding ChangeContextCommand,
+                                Source={StaticResource storiesModel}}"
+                                CommandParameter="{Binding Id}"/>
+                                </Button.InputBindings>
+
+                                <TextBlock Text="{Binding Title}" Grid.Column="2"/>
+                            </Button>
+                            <!--</Border>-->
+
+                        </Grid>
+                        <!--<TextBox Text="{Binding Title}">
                         <TextBox.InputBindings>
                             <MouseBinding MouseAction="LeftClick"
                                 Command="{Binding ChangeContextCommand,
                                 Source={StaticResource storiesModel}}"
                                 CommandParameter="{Binding Id}"/>
                         </TextBox.InputBindings>
-                    </TextBox>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    </TextBox>-->
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>
