@@ -11,7 +11,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 {
     public class CommentsViewModel : ObservableCollection<CommentModel>
     {
-        HackerNewsEndPoint EndPoint = new HackerNewsEndPoint();
+        HackerNewsEndPoint EndPoint = Singleton.EndPoint;
         public GetCommentsCommand GetCommentsCommand { get; set; }
         public MainWindow MV;
 

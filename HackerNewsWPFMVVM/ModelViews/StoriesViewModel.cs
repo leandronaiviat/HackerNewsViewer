@@ -17,7 +17,7 @@ namespace HackerNewsWPFMVVM.ModelViews
         private int NextItem = 0;
         private string StoryType;
 
-        HackerNewsEndPoint EndPoint = new HackerNewsEndPoint();
+        HackerNewsEndPoint EndPoint;
         public GetStoriesCommand GetStoriesCommand { get; set; }
         public ChangeContextCommand ChangeContextCommand { get; set; }
         public MainWindow MV;
@@ -26,6 +26,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public StoriesViewModel()
         {
+            EndPoint = Singleton.EndPoint;
             MV = ((MainWindow)Application.Current.MainWindow);
             MenuItems = new List<string>();
             MenuItems.Add("Best");
@@ -59,7 +60,7 @@ namespace HackerNewsWPFMVVM.ModelViews
                 Clear();
             }
 
-            var result = await EndPoint.GetStories(StoryItemApiName, Increment, NextItem);
+            GetStoriesResponse result = await EndPoint.GetStories(StoryItemApiName, Increment, NextItem);
 
             //result.ForEach(x => Add(x));
 

@@ -9,11 +9,13 @@ namespace HackerNewsWPFMVVM
     public partial class MainWindow : Window
     {
         public int storyId { get; set; }
-        public StoriesViewModel StoriesModel { get; set; } = new StoriesViewModel();
+        public StoriesViewModel StoriesModel { get; set; }
+
         public MainWindow()
         {
-            InitializeComponent();
+            StoriesModel = new StoriesViewModel();
             DataContext = StoriesModel;
+            InitializeComponent();
         }
     }
 }

@@ -15,7 +15,9 @@ namespace HackerNewsWPFMVVM.Models.Api
 
         private HackerNewsCaching Cache = new HackerNewsCaching(new MemoryCache(new MemoryCacheOptions()));
 
-        public HackerNewsEndPoint() { }
+        public HackerNewsEndPoint() {
+            CurrentCollectionIds = new List<int>();
+        }
 
         public async Task<GetStoriesResponse> GetStories(string storyType, int count, int id = 0, string order = "asc")
         {
