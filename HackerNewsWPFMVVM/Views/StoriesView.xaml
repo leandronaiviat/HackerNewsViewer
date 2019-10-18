@@ -22,7 +22,7 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
- 
+
         <!--Items Menu-->
         <DockPanel Grid.Row="0" Grid.Column="0" Background="{StaticResource PrimaryHueMidBrush}" Grid.ColumnSpan="5">
 
@@ -55,16 +55,24 @@
 
         <!--Load More Button-->
         <DockPanel Grid.Row="2" Grid.Column="2">
-            <Button x:Name="loadButton"  Height="30" Content="Load More"
-                            Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.GetStoriesCommand}"
-                            CommandParameter="Next"
+            <Button x:Name="loadButton"  Height="30" Content="{Binding LoadingContent}"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.GetStoriesCommand}"
+                    CommandParameter="Next"
                     IsEnabled="True"
-                    HorizontalAlignment="Stretch"
-                    Style="{StaticResource MaterialDesignRaisedButton}"
-                    materialDesign:ButtonProgressAssist.Value="-1"
-                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                    materialDesign:ButtonProgressAssist.IsIndeterminate="True">
-               
+                    HorizontalAlignment="Stretch">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                        <Setter Property="materialDesign:ButtonProgressAssist.Value" Value="-1" />
+                        <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="True" />
+                        <Setter Property="materialDesign:ButtonProgressAssist.IsIndeterminate" Value="False" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
+                                <Setter Property="materialDesign:ButtonProgressAssist.IsIndeterminate" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
             </Button>
         </DockPanel>
 
