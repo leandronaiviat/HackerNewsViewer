@@ -4,6 +4,7 @@ using HackerNewsWPFMVVM.ModelViews.Commands;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 
 namespace HackerNewsWPFMVVM.ModelViews
@@ -18,9 +19,10 @@ namespace HackerNewsWPFMVVM.ModelViews
         private string StoryType;
 
         HackerNewsEndPoint EndPoint;
+        IsLoadingNotifyer Notifyer;
         public GetStoriesCommand GetStoriesCommand { get; set; }
         public ChangeContextCommand ChangeContextCommand { get; set; }
-        public MainWindow MV;
+        //public MainWindow MV;
 
         public List<string> MenuItems { get; set; }
 
@@ -28,8 +30,10 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public StoriesViewModel()
         {
+            Debug.WriteLine("-----------------------------------------------------------------------------");
             EndPoint = Singleton.EndPoint;
-            MV = ((MainWindow)Application.Current.MainWindow);
+            Notifyer = Singleton.Notifyer;
+            //MV = ((MainWindow)Application.Current.MainWindow);
             MenuItems = new List<string>();
             MenuItems.Add("Best");
             MenuItems.Add("Top");
@@ -52,7 +56,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public async void GetStories(string storyType)
         {
-            IsLoading = false;
+            Notifyer.IsLoading = false;
             StoryType = storyType;
 
             if (CheckCurrentListName(storyType) && storyType != "Next")
@@ -81,7 +85,7 @@ namespace HackerNewsWPFMVVM.ModelViews
                     Add(item);
                 }
             }
-            IsLoading = true;
+            Notifyer.IsLoading = true;
         }
 
         public bool CheckCurrentListName(string parameter)
@@ -103,7 +107,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public void ChangeContext(int storyId)
         {
-            MV.StoryId = storyId;
+            ((MainWindow)Application.Current.MainWindow).StoryId = storyId;
             Application.Current.Windows[0].DataContext = new CommentsViewModel();
         }
 

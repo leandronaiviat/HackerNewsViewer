@@ -4,15 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:storiesmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
+             xmlns:converter="clr-namespace:HackerNewsWPFMVVM.ModelViews.Converters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <storiesmodel:StoriesViewModel x:Key="storiesModel"/>
+        <!--<storiesmodel:StoriesViewModel x:Key="storiesModel"/>
+        <storiesmodel:IsLoadingNotifyer x:Key="notifyer"/>
+        <converter:BackgroudConverter x:Key="converter"/>-->
     </UserControl.Resources>
 
-    <Grid DataContext="{StaticResource storiesModel}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
@@ -47,8 +50,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button x:Name="actionBtn" Width="70" Height="35" Content="{Binding}"
-                            Command="{Binding GetStoriesCommand,
-                            Source={StaticResource storiesModel}}"
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.GetStoriesCommand}"
                             CommandParameter="{Binding}"
                             materialDesign:ButtonAssist.CornerRadius="5 5 0 0"
                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"
@@ -62,8 +64,7 @@
         <!--Load More Button-->
         <DockPanel Grid.Row="2" Grid.Column="2">
             <Button x:Name="loadButton"  Height="30" Content="Load More"
-                            Command="{Binding GetStoriesCommand,
-                            Source={StaticResource storiesModel}}"
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.GetStoriesCommand}"
                             CommandParameter="Next"
                     IsEnabled="True"
                     HorizontalAlignment="Stretch"
@@ -95,8 +96,7 @@
 
                                 <Button.InputBindings>
                                     <MouseBinding MouseAction="LeftClick"
-                                Command="{Binding ChangeContextCommand,
-                                Source={StaticResource storiesModel}}"
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.ChangeContextCommand}"
                                 CommandParameter="{Binding Id}"/>
                                 </Button.InputBindings>
 
@@ -127,7 +127,7 @@
                                 <Button.InputBindings>
                                     <MouseBinding MouseAction="LeftClick"
                                 Command="{Binding ChangeContextCommand,
-                                Source={StaticResource storiesModel}}"
+                                RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"
                                 CommandParameter="{Binding Id}"/>
                                 </Button.InputBindings>
 
