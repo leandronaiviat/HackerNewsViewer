@@ -8,7 +8,7 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-activo-success.svg)]()
-[![Version](https://img.shields.io/badge/version-3.0.0-orange.svg)]()
+[![Version](https://img.shields.io/badge/version-4.1.0-orange.svg)]()
 [![Etapa](https://img.shields.io/badge/etapa-alpha-blue.svg)]()
 
 </div>
