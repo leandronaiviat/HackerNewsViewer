@@ -12,7 +12,7 @@
     <UserControl.Resources>
 
         <!--Static Resouses-->
-        <commentsmodel:CommentsViewModel x:Key="commentsModel"/>
+        <!--<commentsmodel:CommentsViewModel x:Key="commentsModel"/>-->
         <converter:ButtonVisibilityConverter x:Key="converter"/>
 
         <!--Recursive Comments Template-->
@@ -27,7 +27,7 @@
                                  BorderThickness="0"
                                  Background="Transparent"
                                  Margin="0 0 0 10"/>
-                <Button Command="{Binding GetCommentsCommand, Source={StaticResource commentsModel}}" CommandParameter="{Binding Id}"
+                    <Button Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.GetCommentsCommand}" CommandParameter="{Binding Id}"
                          HorizontalAlignment="Left" 
                         Style="{StaticResource MaterialDesignFlatAccentBgButton}"
                         materialDesign:ButtonProgressAssist.Value="-1"
@@ -58,7 +58,7 @@
 
     </UserControl.Resources>
 
-    <Grid DataContext="{StaticResource commentsModel}" >
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
@@ -92,8 +92,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button x:Name="actionBtn" Width="70" Height="35" Content="{Binding}"
-                            Command="{Binding GetCommentsCommand,
-                            Source={StaticResource commentsModel}}"
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.GetCommentsCommand}"
                             CommandParameter="{Binding}"
                             materialDesign:ButtonAssist.CornerRadius="5 5 0 0"
                                 Style="{StaticResource MaterialDesignFlatDarkBgButton}"

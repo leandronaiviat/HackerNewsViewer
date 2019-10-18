@@ -108,7 +108,7 @@ namespace HackerNewsWPFMVVM.ModelViews
         public void ChangeContext(int storyId)
         {
             ((MainWindow)Application.Current.MainWindow).StoryId = storyId;
-            Application.Current.Windows[0].DataContext = new CommentsViewModel();
+            ((MainWindow)Application.Current.MainWindow).DataContext = new CommentsViewModel();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
