@@ -19,27 +19,48 @@ namespace HackerNewsWPFMVVM.ModelViews
         private string StoryType;
 
         HackerNewsEndPoint EndPoint;
-        IsLoadingNotifyer Notifyer;
         public GetStoriesCommand GetStoriesCommand { get; set; }
         public ChangeContextCommand ChangeContextCommand { get; set; }
-        //public MainWindow MV;
 
         public List<string> MenuItems { get; set; }
+        public string LoadingContent { get; private set; }
 
-        //public bool IsLoading { get; set; }
+        private bool _IsLoading;
+        public bool IsLoading
+        {
+            get
+            {
+                return _IsLoading;
+            }
+            set
+            {
+                _IsLoading = value;
+                if(_IsLoading)
+                {
+                    LoadingContent = "Loading...";
+                }
+                else
+                {
+                    LoadingContent = "Load More Stories";
+                }
+
+                RaisePropertyChanged(nameof(IsLoading));
+                RaisePropertyChanged(nameof(LoadingContent));
+
+                CommandManager.InvalidateRequerySuggested();
+            }
+        }
+
 
         public StoriesViewModel()
         {
-            Debug.WriteLine("-----------------------------------------------------------------------------");
             EndPoint = Singleton.EndPoint;
-            Notifyer = Singleton.Notifyer;
-            //MV = ((MainWindow)Application.Current.MainWindow);
+
             MenuItems = new List<string>();
             MenuItems.Add("Best");
             MenuItems.Add("Top");
             MenuItems.Add("New");
             MenuItems.Add("Ask");
-            //MenuItems.Add("Next");
 
             this.GetStoriesCommand = new GetStoriesCommand(this);
             this.ChangeContextCommand = new ChangeContextCommand(this);
@@ -56,13 +77,13 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public async void GetStories(string storyType)
         {
-            Notifyer.IsLoading = false;
+            IsLoading = true;
             StoryType = storyType;
 
             if (CheckCurrentListName(storyType) && storyType != "Next")
             {
                 StoryItemApiName = storyType.ToLower() + "stories";
-                OnPropertyChanged("StoryItemApiName");
+                //OnPropertyChanged("StoryItemApiName");
                 NextItem = 0;
                 Clear();
             }
@@ -85,15 +106,16 @@ namespace HackerNewsWPFMVVM.ModelViews
                     Add(item);
                 }
             }
-            Notifyer.IsLoading = true;
+
+            IsLoading = false;
         }
 
         public bool CheckCurrentListName(string parameter)
         {
-            if (Notifyer.IsLoading == false && parameter == "Next")
+            if (IsLoading == true && parameter == "Next")
                 return false;
 
-            if (Notifyer.IsLoading == true && parameter == "Next")
+            if (IsLoading == false && parameter == "Next")
                 return true;
 
             if (NextItem < 0 && parameter == "Next")
@@ -111,14 +133,9 @@ namespace HackerNewsWPFMVVM.ModelViews
             ((MainWindow)Application.Current.MainWindow).DataContext = new CommentsViewModel();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
+        public void RaisePropertyChanged(string s)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            OnPropertyChanged(new PropertyChangedEventArgs(s));
         }
     }
 }
