@@ -26,7 +26,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public List<string> MenuItems { get; set; }
 
-        public bool IsLoading { get; set; }
+        //public bool IsLoading { get; set; }
 
         public StoriesViewModel()
         {
@@ -90,10 +90,10 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         public bool CheckCurrentListName(string parameter)
         {
-            if (IsLoading == false && parameter == "Next")
+            if (Notifyer.IsLoading == false && parameter == "Next")
                 return false;
 
-            if (IsLoading == true && parameter == "Next")
+            if (Notifyer.IsLoading == true && parameter == "Next")
                 return true;
 
             if (NextItem < 0 && parameter == "Next")
