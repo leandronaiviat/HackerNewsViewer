@@ -3,17 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:storiesmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
-             xmlns:converter="clr-namespace:HackerNewsWPFMVVM.ModelViews.Converters"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-
-    <UserControl.Resources>
-        <!--<storiesmodel:StoriesViewModel x:Key="storiesModel"/>
-        <storiesmodel:IsLoadingNotifyer x:Key="notifyer"/>
-        <converter:BackgroudConverter x:Key="converter"/>-->
-    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
