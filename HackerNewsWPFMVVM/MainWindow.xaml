@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
-        xmlns:commands="clr-namespace:HackerNewsWPFMVVM.ModelViews.Commands"
         xmlns:views="clr-namespace:HackerNewsWPFMVVM.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -27,7 +26,7 @@
                           RelativeSource={RelativeSource Mode=FindAncestor,
                                                          AncestorType=Window}, Path=DataContext}"/>
             </DataTemplate>
-
+            
         </ResourceDictionary>
     </Window.Resources>
 
