@@ -1,7 +1,4 @@
 ﻿using HackerNewsWPFMVVM.Models.Api;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HackerNewsWPFMVVM.ModelViews
 {
@@ -11,12 +8,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
         static Singleton()
         {
-            EndPoint = new HackerNewsEndPoint();
-        }
-
-        public static HackerNewsEndPoint GetEndPoint()
-        {
-            return EndPoint;
+            EndPoint = new HackerNewsEndPoint();            
         }
     }
 }

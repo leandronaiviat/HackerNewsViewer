@@ -17,12 +17,16 @@
             </ResourceDictionary.MergedDictionaries>
             
             <DataTemplate x:Name="storiesViewTemplate" DataType="{x:Type viewmodel:StoriesViewModel}">
-                <views:StoriesView DataContext="{Binding}"/>
+                <views:StoriesView DataContext="{Binding 
+                          RelativeSource={RelativeSource Mode=FindAncestor,
+                                                         AncestorType=Window}, Path=DataContext}"/>
             </DataTemplate>
             <DataTemplate x:Name="commentsViewTemplate" DataType="{x:Type viewmodel:CommentsViewModel}">
-                <views:CommentsView DataContext="{Binding}"/>
+                <views:CommentsView DataContext="{Binding 
+                          RelativeSource={RelativeSource Mode=FindAncestor,
+                                                         AncestorType=Window}, Path=DataContext}"/>
             </DataTemplate>
-        
+            
         </ResourceDictionary>
     </Window.Resources>
 

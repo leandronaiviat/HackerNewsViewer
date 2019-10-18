@@ -11,6 +11,7 @@ namespace HackerNewsWPFMVVM
     {
         public int StoryId { get; set; }
         public StoriesViewModel StoriesModel { get; set; } = new StoriesViewModel();
+        
         bool _shown;
 
         protected override void OnContentRendered(EventArgs e)
