@@ -23,7 +23,6 @@ namespace HackerNewsWPFMVVM.ModelViews
         public ChangeContextCommand ChangeContextCommand { get; set; }
 
         public List<string> MenuItems { get; set; }
-        public string LoadingContent { get; private set; }
 
         private bool _IsLoading;
         public bool IsLoading
@@ -35,18 +34,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             set
             {
                 _IsLoading = value;
-                if(_IsLoading)
-                {
-                    LoadingContent = "Loading...";
-                }
-                else
-                {
-                    LoadingContent = "Load More Stories";
-                }
-
                 RaisePropertyChanged(nameof(IsLoading));
-                RaisePropertyChanged(nameof(LoadingContent));
-
                 CommandManager.InvalidateRequerySuggested();
             }
         }

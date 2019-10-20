@@ -55,20 +55,22 @@
 
         <!--Load More Button-->
         <DockPanel Grid.Row="2" Grid.Column="2">
-            <Button x:Name="loadButton"  Height="30" Content="{Binding LoadingContent}"
+            <Button x:Name="loadButton"  Height="30"
                     Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.GetStoriesCommand}"
                     CommandParameter="Next"
                     IsEnabled="True"
                     HorizontalAlignment="Stretch">
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                        <Setter Property="Content" Value="Load More Stories"/>
                         <Setter Property="materialDesign:ButtonProgressAssist.Value" Value="-1" />
                         <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="True" />
                         <Setter Property="materialDesign:ButtonProgressAssist.IsIndeterminate" Value="False" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsLoading}" Value="True">
-                                <Setter Property="materialDesign:ButtonProgressAssist.IsIndeterminate" Value="True" />
-                            </DataTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Content" Value="Loading"/>
+                                <Setter Property="materialDesign:ButtonProgressAssist.IsIndeterminate" Value="True"/>
+                            </Trigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
