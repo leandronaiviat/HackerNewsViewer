@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 
 namespace HackerNewsWPFMVVM.ModelViews
 {
@@ -123,23 +124,14 @@ namespace HackerNewsWPFMVVM.ModelViews
             return true;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         public void ChangeContext()
         {
             Application.Current.Windows[0].DataContext = MV.StoriesModel;
         }
 
-
-
-        // CommentViewModel : ObservableCollection<List<CommentModel>> OR ObservableCollection<ObservableCollection<CommentModel>>
+        public void RaisePropertyChanged(string s)
+        {
+            OnPropertyChanged(new PropertyChangedEventArgs(s));
+        }
     }
 }
