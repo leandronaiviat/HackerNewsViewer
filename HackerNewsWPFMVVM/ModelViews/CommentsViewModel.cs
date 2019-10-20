@@ -47,6 +47,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             {
                 if (item.Text != null)
                 {
+                    item.Text = CommentsParser.Parse(item.Text);
                     Add(item);
                 }
             }
@@ -75,8 +76,11 @@ namespace HackerNewsWPFMVVM.ModelViews
 
             foreach (var item in result)
             {
-                //Add(item);
-                parent.Children.Add(item);
+                if (item.Text != null)
+                {
+                    item.Text = CommentsParser.Parse(item.Text);
+                    parent.Children.Add(item);
+                }
             }
 
             var itemToUpdate = this.Single(r => r.Id == TopCommentId);
