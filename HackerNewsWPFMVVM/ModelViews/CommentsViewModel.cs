@@ -45,7 +45,10 @@ namespace HackerNewsWPFMVVM.ModelViews
 
             foreach (var item in result)
             {
-                Add(item);
+                if (item.Text != null)
+                {
+                    Add(item);
+                }
             }
         }
 
@@ -60,7 +63,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             foreach (var item in this)
             {
                 commentResponse = GetCommentTree(item, parentId, item.Id);
-                if(commentResponse != null)
+                if (commentResponse != null)
                 {
                     break;
                 }
