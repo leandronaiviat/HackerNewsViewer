@@ -26,20 +26,39 @@
                                  Background="Transparent"
                                  Margin="0 0 0 10"/>
                     <Button Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.GetCommentsCommand}" CommandParameter="{Binding Id}"
-                         HorizontalAlignment="Left" 
-                        Style="{StaticResource MaterialDesignFlatAccentBgButton}"
-                        materialDesign:ButtonProgressAssist.Value="-1"
-                    materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                    materialDesign:ButtonProgressAssist.IsIndeterminate="True">
-                    <Button.Visibility>
+                         HorizontalAlignment="Left">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                <Setter Property="materialDesign:ButtonProgressAssist.Value" Value="-1" />
+                                <Setter Property="materialDesign:ButtonProgressAssist.IsIndicatorVisible" Value="True" />
+                                <Setter Property="materialDesign:ButtonProgressAssist.IsIndeterminate" Value="False" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="materialDesign:ButtonProgressAssist.IsIndeterminate" Value="True"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Visibility>
                         <MultiBinding Converter="{StaticResource btnconverter}">
                             <Binding Path="Kids.Count"/>
                             <Binding Path="Children.Count"/>
                         </MultiBinding>
                     </Button.Visibility>
-                    <Button.Content>
-                        <TextBlock Text="{Binding Kids.Count, StringFormat='{}{0} more comments'}"/>
-                    </Button.Content>
+                        <Button.Content>
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value="{Binding Kids.Count, StringFormat='{}{0} more comment(s)'}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button, Mode=FindAncestor}, Path=IsEnabled}" Value="False">
+                                                <Setter Property="Text" Value="Loading"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Button.Content>
                 </Button>
                 <ItemsControl ItemsSource="{Binding Children}" HorizontalAlignment="Left"
                               HorizontalContentAlignment="Stretch"
