@@ -94,13 +94,25 @@
                             BorderBrush="{DynamicResource MaterialDesignDivider}">-->
 
                             <Button Grid.Column="0"
-                                Style="{StaticResource MaterialDesignFlatButton}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+                                HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
 
                                 <Button.InputBindings>
                                     <MouseBinding MouseAction="LeftClick"
                                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.ChangeContextCommand}"
                                 CommandParameter="{Binding Id}"/>
                                 </Button.InputBindings>
+
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Kids}" Value="{x:Null}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
 
                                 <StackPanel Orientation="Horizontal">
                                     <Grid>
