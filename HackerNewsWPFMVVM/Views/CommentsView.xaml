@@ -24,7 +24,10 @@
                                  Cursor="Arrow"
                                  BorderThickness="0"
                                  Background="Transparent"
-                                 Margin="0 0 0 10"/>
+                                 Margin="0 0 0 10"
+                                 FontFamily="Leelawadee UI"
+                                 FontSize="15"
+                                 TextBlock.LineHeight="15"/>
                     <Button Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.GetCommentsCommand}" CommandParameter="{Binding Id}"
                          HorizontalAlignment="Left">
                         <Button.Style>
