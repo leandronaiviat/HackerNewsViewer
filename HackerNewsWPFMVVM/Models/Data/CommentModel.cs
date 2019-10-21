@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace HackerNewsWPFMVVM.Models.Data
 {
@@ -7,7 +8,8 @@ namespace HackerNewsWPFMVVM.Models.Data
         public string By { get; set; }      //AskModel, StoryModel, CommentModel
         public int Id { get; set; }         //AskModel, StoryModel, CommentModel
         public List<int> Kids { get; set; } = new List<int>();//AskModel, StoryModel, CommentModel
-        public int Time { get; set; }       //AskModel, StoryModel, CommentModel
+        public double Time { get; set; }       //AskModel, StoryModel, CommentModel
+        public string TimeSpan { get; set; }
         public int Parent { get; set; }     //CommentModel
         public string Text { get; set; }    //AskModel, CommentModel
         public string Type { get; set; }    //AskModel, StoryModel, CommentModel

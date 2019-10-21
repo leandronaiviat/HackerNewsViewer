@@ -1,4 +1,5 @@
-﻿using HackerNewsWPFMVVM.Models.Api;
+﻿using HackerNewsWPFMVVM.Helpers;
+using HackerNewsWPFMVVM.Models.Api;
 using HackerNewsWPFMVVM.Models.Data;
 using HackerNewsWPFMVVM.ModelViews.Commands;
 using System.Collections.Generic;
@@ -46,6 +47,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             {
                 if (item.Text != null)
                 {
+                    item.TimeSpan = TimeConverter.TimeSpanToString(item.Time);
                     item.Text = HtmlParser.Parse(item.Text);
                     Add(item);
                 }
@@ -77,6 +79,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             {
                 if (item.Text != null)
                 {
+                    item.TimeSpan = TimeConverter.TimeSpanToString(item.Time);
                     item.Text = HtmlParser.Parse(item.Text);
                     parent.Children.Add(item);
                 }
