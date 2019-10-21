@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Input;
 
 namespace HackerNewsWPFMVVM.ModelViews
 {
@@ -47,7 +46,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             {
                 if (item.Text != null)
                 {
-                    item.Text = CommentsParser.Parse(item.Text);
+                    item.Text = HtmlParser.Parse(item.Text);
                     Add(item);
                 }
             }
@@ -78,7 +77,7 @@ namespace HackerNewsWPFMVVM.ModelViews
             {
                 if (item.Text != null)
                 {
-                    item.Text = CommentsParser.Parse(item.Text);
+                    item.Text = HtmlParser.Parse(item.Text);
                     parent.Children.Add(item);
                 }
             }

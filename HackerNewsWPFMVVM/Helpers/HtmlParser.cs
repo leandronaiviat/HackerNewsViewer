@@ -2,7 +2,7 @@
 
 namespace HackerNewsWPFMVVM.ModelViews
 {
-    public class CommentsParser
+    public class HtmlParser
     {
         public static string Parse(string text)
         {
