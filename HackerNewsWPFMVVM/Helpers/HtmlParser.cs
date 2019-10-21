@@ -8,11 +8,10 @@ namespace HackerNewsWPFMVVM.ModelViews
         {
             if (text != null)
             {
-                string newText = text.Replace("<p>", "\n<p>");
+                string newText = text.Replace("<p>", "\n\n<p>");
                 HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
                 doc.LoadHtml(newText);
                 newText = HttpUtility.HtmlDecode(doc.DocumentNode.InnerText);
-                newText.Replace("\n", System.Environment.NewLine + "&amp;#10;&amp;#10;");
                 return newText;
             }
             return null;
