@@ -15,7 +15,8 @@ namespace HackerNewsWPFMVVM.Models.Api
 
         private HackerNewsCaching Cache = new HackerNewsCaching(new MemoryCache(new MemoryCacheOptions()));
 
-        public HackerNewsEndPoint() {
+        public HackerNewsEndPoint()
+        {
             CurrentCollectionIds = new List<int>();
         }
 
@@ -97,7 +98,10 @@ namespace HackerNewsWPFMVVM.Models.Api
                 {
                     result = await HackerNewsApi.ApiHandler<CommentModel>(url);
                 }
-                Cache.AddItem(result);
+                if (result != null)
+                {
+                    Cache.AddItem(result);
+                }
             }
 
             return result;
@@ -109,7 +113,7 @@ namespace HackerNewsWPFMVVM.Models.Api
 
             IDataModel parent;
 
-            if(dataModelType == "story")
+            if (dataModelType == "story")
             {
                 parent = await GetFromCacheOrApi(parentId, "story") as StoryModel;
 
@@ -123,7 +127,10 @@ namespace HackerNewsWPFMVVM.Models.Api
             foreach (var item in parent.Kids)
             {
                 CommentModel result = await GetFromCacheOrApi(item, "comment") as CommentModel;
-                commentsCollection.Add(result);
+                if (result != null)
+                {
+                    commentsCollection.Add(result);
+                }
             }
 
             return commentsCollection;
