@@ -6,7 +6,7 @@
         xmlns:viewmodel="clr-namespace:HackerNewsWPFMVVM.ModelViews"
         xmlns:views="clr-namespace:HackerNewsWPFMVVM.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Hacker News Viewer" Height="450" Width="800">
 
     <Window.Resources>
         <ResourceDictionary>
