@@ -121,31 +121,33 @@
                                 </StackPanel>
                             </Button>
                             <Button Grid.Column="1"
-                                Style="{StaticResource MaterialDesignFlatButton}"
                                     HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Left"
                                     ToolTip="{Binding Title}">
 
                                 <Button.InputBindings>
                                     <MouseBinding MouseAction="LeftClick"
-                                Command="{Binding ChangeContextCommand,
-                                RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}}"
-                                CommandParameter="{Binding Id}"/>
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=Window, Mode=FindAncestor}, Path=DataContext.GoToUrlCommand}"
+                                CommandParameter="{Binding Url}"/>
                                 </Button.InputBindings>
 
                                 <TextBlock Text="{Binding Title}" Grid.Column="2"/>
+
+                                <Button.Style>
+                                    <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Url}" Value="{x:Null}">
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                                <Setter Property="Foreground" Value="Black"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
                             </Button>
                             <!--</Border>-->
 
                         </Grid>
-                        <!--<TextBox Text="{Binding Title}">
-                        <TextBox.InputBindings>
-                            <MouseBinding MouseAction="LeftClick"
-                                Command="{Binding ChangeContextCommand,
-                                Source={StaticResource storiesModel}}"
-                                CommandParameter="{Binding Id}"/>
-                        </TextBox.InputBindings>
-                    </TextBox>-->
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

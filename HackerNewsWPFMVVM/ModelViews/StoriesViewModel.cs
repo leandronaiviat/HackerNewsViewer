@@ -1,4 +1,5 @@
-﻿using HackerNewsWPFMVVM.Models.Api;
+﻿using HackerNewsWPFMVVM.Helpers;
+using HackerNewsWPFMVVM.Models.Api;
 using HackerNewsWPFMVVM.Models.Data;
 using HackerNewsWPFMVVM.ModelViews.Commands;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace HackerNewsWPFMVVM.ModelViews
         HackerNewsEndPoint EndPoint;
         public GetStoriesCommand GetStoriesCommand { get; set; }
         public ChangeContextCommand ChangeContextCommand { get; set; }
+        public GoToUrlCommand GoToUrlCommand { get; set; }
 
         public List<string> MenuItems { get; set; }
 
@@ -52,6 +54,7 @@ namespace HackerNewsWPFMVVM.ModelViews
 
             this.GetStoriesCommand = new GetStoriesCommand(this);
             this.ChangeContextCommand = new ChangeContextCommand(this);
+            this.GoToUrlCommand = new GoToUrlCommand(this);
 
             GetStories("top");
 
@@ -119,6 +122,11 @@ namespace HackerNewsWPFMVVM.ModelViews
         {
             ((MainWindow)Application.Current.MainWindow).StoryId = storyId;
             ((MainWindow)Application.Current.MainWindow).DataContext = new CommentsViewModel();
+        }
+
+        public void GoToUrl(string url)
+        {
+            Browser.Open(url);
         }
 
         public void RaisePropertyChanged(string s)
